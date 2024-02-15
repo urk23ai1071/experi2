@@ -1,0 +1,51 @@
+hello karunya
+def count_upper_lower(file_path):
+    upper_count = 0
+    lower_count = 0
+    with open(file_path, 'r') as file:
+        content = file.read()
+        for i in content:
+            if i.isupper():
+                upper_count += 1
+            elif i.islower():
+                lower_count += 1
+    return upper_count, lower_count
+
+def search_word_in_line(file_path, line_number, word):
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+        if line_number <= len(lines):
+            line = lines[line_number - 1]
+            if word in line:
+                return f"Word '{word}' found in line {line_number}."
+            else:
+                return f"Word '{word}' not found in line {line_number}."
+        else:
+            return "Invalid line number."
+
+def search_word_in_range(file_path, start_line, end_line, word):
+    result = []
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+        for i in range(start_line - 1, min(end_line, len(lines))):
+            if word in lines[i]:
+                result.append(f"Word '{word}' found in line {i + 1}.")
+    if result:
+        return '\n'.join(result)
+    else:
+        return f"Word '{word}' not found in the specified range of lines."
+
+def replace_word(file_path, old_word, new_word):
+    with open(file_path, 'r') as file:
+        content = file.read()
+    content = content.replace(old_word, new_word)
+    with open(file_path, 'w') as file:
+        file.write(content)
+    return f"Word '{old_word}' replaced with '{new_word}' in the file."
+
+# Example usage:
+file_path = "file2.txt"  # Replace with the path to your file
+print(count_upper_lower(file_path))
+print(search_word_in_line(file_path, 1, "python"))
+print(search_word_in_range(file_path, 1,2, 'everyone'))
+print(replace_word(file_path, 'hloo', 'hii'))
